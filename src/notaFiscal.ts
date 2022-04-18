@@ -1,7 +1,9 @@
 import { toJson } from "xml2json";
 
 import { Destinatario } from "./models/Destinatario";
+import { InformacaoNotaFiscalEletronica } from "./models/InformacaoNotaFiscalEletronica";
 import { NotaFiscal } from "./models/NotaFiscal";
+import { NotaFiscalEletronica } from "./models/NotaFiscalEletronica";
 import { ResultadoNotaFiscalEletronica } from "./models/ResultadoNotaFiscalEletronica";
 import { xml as nota } from "./nota";
 import { ResultNfe } from "./notaTypes";
@@ -12,10 +14,14 @@ const notaFiscalResponse: ResultNfe = JSON.parse(toJson(nota));
 // const destinatario = new Destinatario();
 // destinatario.cnpj = notaFiscalResponse.NFe.infNFe.dest.CNPJ;
 
-
 const resultadoNotaFiscalEletronica = new ResultadoNotaFiscalEletronica();
-resultadoNotaFiscalEletronica.notaFiscalEletronica.xmlns
-resultadoNotaFiscalEletronica.notaFiscalEletronica.informacaoNotaFiscalEletronica.id
-resultadoNotaFiscalEletronica.notaFiscalEletronica.informacaoNotaFiscalEletronica.versao
-resultadoNotaFiscalEletronica.notaFiscalEletronica.informacaoNotaFiscalEletronica.ide.
 
+const notaFiscalEletronica = new NotaFiscalEletronica();
+notaFiscalEletronica.xmlns = notaFiscalResponse.Nfe.xmlns;
+notaFiscalEletronica.informacaoNotaFiscalEletronica =
+  notaFiscalResponse.Nfe.infNFe;
+notaFiscalEletronica.signature = notaFiscalResponse.Nfe.Signature;
+
+const informacaoNotaFiscalEletronica = new InformacaoNotaFiscalEletronica();
+informacaoNotaFiscalEletronica.id = notaFiscalResponse.Nfe.infNFe.Id;
+informacaoNotaFiscalEletronica.versao = notaFiscalResponse.Nfe.infNFe.versao;
