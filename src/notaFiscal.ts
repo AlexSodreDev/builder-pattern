@@ -17,11 +17,13 @@ const notaFiscalResponse: ResultNfe = JSON.parse(toJson(nota));
 const resultadoNotaFiscalEletronica = new ResultadoNotaFiscalEletronica();
 
 const notaFiscalEletronica = new NotaFiscalEletronica();
-notaFiscalEletronica.xmlns = notaFiscalResponse.Nfe.xmlns;
+notaFiscalEletronica.xmlns = notaFiscalResponse.NFe.xmlns;
 notaFiscalEletronica.informacaoNotaFiscalEletronica =
-  notaFiscalResponse.Nfe.infNFe;
-notaFiscalEletronica.signature = notaFiscalResponse.Nfe.Signature;
+  notaFiscalResponse.NFe.infNFe;
+notaFiscalEletronica.signature = notaFiscalResponse.NFe.Signature;
 
 const informacaoNotaFiscalEletronica = new InformacaoNotaFiscalEletronica();
-informacaoNotaFiscalEletronica.id = notaFiscalResponse.Nfe.infNFe.Id;
-informacaoNotaFiscalEletronica.versao = notaFiscalResponse.Nfe.infNFe.versao;
+informacaoNotaFiscalEletronica.id = notaFiscalResponse.NFe.infNFe.Id;
+informacaoNotaFiscalEletronica.versao = notaFiscalResponse.NFe.infNFe.versao;
+
+console.log(informacaoNotaFiscalEletronica);
