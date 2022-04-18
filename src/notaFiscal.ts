@@ -25,5 +25,20 @@ notaFiscalEletronica.signature = notaFiscalResponse.NFe.Signature;
 const informacaoNotaFiscalEletronica = new InformacaoNotaFiscalEletronica();
 informacaoNotaFiscalEletronica.id = notaFiscalResponse.NFe.infNFe.Id;
 informacaoNotaFiscalEletronica.versao = notaFiscalResponse.NFe.infNFe.versao;
+informacaoNotaFiscalEletronica.ide = notaFiscalResponse.NFe.infNFe.ide;
+informacaoNotaFiscalEletronica.emitente = notaFiscalResponse.NFe.infNFe.emit;
+informacaoNotaFiscalEletronica.destinatario =
+  notaFiscalResponse.NFe.infNFe.dest;
+informacaoNotaFiscalEletronica.retirada =
+  notaFiscalResponse.NFe.infNFe.retirada;
+informacaoNotaFiscalEletronica.entrega = notaFiscalResponse.NFe.infNFe.entrega;
+informacaoNotaFiscalEletronica.detalhe = notaFiscalResponse.NFe.infNFe.det[0];
+informacaoNotaFiscalEletronica.detalhe.imposto =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto;
+informacaoNotaFiscalEletronica.total = notaFiscalResponse.NFe.infNFe.total;
+informacaoNotaFiscalEletronica.transporte =
+  notaFiscalResponse.NFe.infNFe.transp;
+informacaoNotaFiscalEletronica.informacaoAdicional =
+  notaFiscalResponse.NFe.infNFe.infAdic;
 
 console.log(informacaoNotaFiscalEletronica);
