@@ -1,6 +1,6 @@
 export class Icms00 {
   orig: string;
-  cst: string;
+  CST: string;
   modBC: string;
   vBC: string;
   pICMS: string;
