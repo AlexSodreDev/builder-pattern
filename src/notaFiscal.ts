@@ -1,17 +1,27 @@
 import { toJson } from "xml2json";
 
+import { CEan } from "./models/CEan";
+import { CEantrib } from "./models/CEantrib";
+import { Cofins } from "./models/Cofins";
 import { Destinatario } from "./models/Destinatario";
 import { Detalhe } from "./models/Detalhe";
 import { Emitente } from "./models/Emitente";
 import { EnderecoDestinatario } from "./models/EnderecoDestinatario";
 import { EnderecoEmitente } from "./models/EnderecoEmitente";
 import { Entrega } from "./models/Entrega";
+import { Icms } from "./models/Icms";
+import { Icms00 } from "./models/Icms00";
 import { Ide } from "./models/Ide";
+import { Imposto } from "./models/Imposto";
 import { InformacaoNotaFiscalEletronica } from "./models/InformacaoNotaFiscalEletronica";
 import { NotaFiscal } from "./models/NotaFiscal";
 import { NotaFiscalEletronica } from "./models/NotaFiscalEletronica";
+import { Pis } from "./models/Pis";
+import { PisAliquota } from "./models/PisAliquota";
+import { Produto } from "./models/Produto";
 import { ResultadoNotaFiscalEletronica } from "./models/ResultadoNotaFiscalEletronica";
 import { Retirada } from "./models/Retirada";
+import { Total } from "./models/Total";
 import { xml as nota } from "./nota";
 import { ResultNfe } from "./notaTypes";
 
@@ -28,6 +38,8 @@ const notaFiscalEletronica = new NotaFiscalEletronica();
 notaFiscalEletronica.xmlns = notaFiscalResponse.NFe.xmlns;
 notaFiscalEletronica.informacaoNotaFiscalEletronica =
   notaFiscalResponse.NFe.infNFe;
+// notaFiscalEletronica.informacaoNotaFiscalEletronica.destinatario.cnpj =
+//   notaFiscalResponse.NFe.infNFe.dest.CNPJ;
 notaFiscalEletronica.signature = notaFiscalResponse.NFe.Signature;
 
 const informacaoNotaFiscalEletronica = new InformacaoNotaFiscalEletronica();
@@ -185,4 +197,121 @@ detalhe.imposto.cofins.cofinsAliquota.pCOFINS =
 detalhe.imposto.cofins.cofinsAliquota.vCOFINS =
   notaFiscalResponse.NFe.infNFe.det[0].imposto.COFINS.COFINSAliq.vCOFINS;
 
-console.log(detalhe.imposto);
+const produto = new Produto();
+produto.cProd = notaFiscalResponse.NFe.infNFe.det[0].prod.cProd;
+produto.cEAN = notaFiscalResponse.NFe.infNFe.det[0].prod.cEAN;
+produto.xProd = notaFiscalResponse.NFe.infNFe.det[0].prod.xProd;
+produto.CFOP = notaFiscalResponse.NFe.infNFe.det[0].prod.CFOP;
+produto.uCom = notaFiscalResponse.NFe.infNFe.det[0].prod.uCom;
+produto.qCom = notaFiscalResponse.NFe.infNFe.det[0].prod.qCom;
+produto.vUnCom = notaFiscalResponse.NFe.infNFe.det[0].prod.vUnCom;
+produto.vProd = notaFiscalResponse.NFe.infNFe.det[0].prod.vProd;
+produto.cEANTrib = notaFiscalResponse.NFe.infNFe.det[0].prod.cEANTrib;
+produto.uTrib = notaFiscalResponse.NFe.infNFe.det[0].prod.uTrib;
+produto.qTrib = notaFiscalResponse.NFe.infNFe.det[0].prod.qTrib;
+produto.vUnTrib = notaFiscalResponse.NFe.infNFe.det[0].prod.vUnTrib;
+
+const cean = new CEan();
+
+const ceanTrib = new CEantrib();
+
+const imposto = new Imposto();
+imposto.icms = notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS;
+imposto.icms.icms00 = notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00;
+imposto.icms.icms00.orig =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.orig;
+imposto.icms.icms00.CST =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.CST;
+imposto.icms.icms00.modBC =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.modBC;
+imposto.icms.icms00.vBC =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.vBC;
+imposto.icms.icms00.pICMS =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.pICMS;
+imposto.icms.icms00.vICMS =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.vICMS;
+imposto.pis = notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS;
+imposto.pis.pisAliquota =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS.PISAliq;
+imposto.pis.pisAliquota.CST =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS.PISAliq.CST;
+imposto.pis.pisAliquota.vBC =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS.PISAliq.vBC;
+imposto.pis.pisAliquota.pPIS =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS.PISAliq.pPIS;
+imposto.pis.pisAliquota.vPIS =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS.PISAliq.vPIS;
+imposto.cofins = notaFiscalResponse.NFe.infNFe.det[0].imposto.COFINS;
+imposto.cofins.cofinsAliquota =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.COFINS.COFINSAliq;
+imposto.cofins.cofinsAliquota.CST =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.COFINS.COFINSAliq.CST;
+imposto.cofins.cofinsAliquota.vBC =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.COFINS.COFINSAliq.vBC;
+imposto.cofins.cofinsAliquota.pCOFINS =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.COFINS.COFINSAliq.pCOFINS;
+imposto.cofins.cofinsAliquota.vCOFINS =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.COFINS.COFINSAliq.vCOFINS;
+
+// seria somente o icms??
+const icms = new Icms();
+icms.icms00 = notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00;
+icms.icms00.orig =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.orig;
+icms.icms00.CST = notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.CST;
+icms.icms00.modBC =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.modBC;
+icms.icms00.vBC = notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.vBC;
+icms.icms00.pICMS =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.pICMS;
+icms.icms00.vICMS =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.vICMS;
+
+const icms00 = new Icms00();
+icms00.orig = notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.orig;
+icms00.CST = notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.CST;
+icms00.modBC = notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.modBC;
+icms00.vBC = notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.vBC;
+icms00.pICMS = notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.pICMS;
+icms00.vICMS = notaFiscalResponse.NFe.infNFe.det[0].imposto.ICMS.ICMS00.vICMS;
+
+// seria somente o pis??
+const pis = new Pis();
+// pis = notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS;
+pis.pisAliquota = notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS.PISAliq;
+pis.pisAliquota.CST =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS.PISAliq.CST;
+pis.pisAliquota.vBC =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS.PISAliq.vBC;
+pis.pisAliquota.pPIS =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS.PISAliq.pPIS;
+pis.pisAliquota.vPIS =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS.PISAliq.vPIS;
+
+const pisAliquota = new PisAliquota();
+// pisAliquota = notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS.PISAliq;
+pisAliquota.CST = notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS.PISAliq.CST;
+pisAliquota.vBC = notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS.PISAliq.vBC;
+pisAliquota.pPIS =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS.PISAliq.pPIS;
+pisAliquota.vPIS =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.PIS.PISAliq.vPIS;
+
+const cofins = new Cofins();
+cofins.cofinsAliquota =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.COFINS.COFINSAliq;
+cofins.cofinsAliquota.CST =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.COFINS.COFINSAliq.CST;
+cofins.cofinsAliquota.vBC =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.COFINS.COFINSAliq.vBC;
+cofins.cofinsAliquota.pCOFINS =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.COFINS.COFINSAliq.pCOFINS;
+cofins.cofinsAliquota.vCOFINS =
+  notaFiscalResponse.NFe.infNFe.det[0].imposto.COFINS.COFINSAliq.vCOFINS;
+
+// terminar =)
+// const total = new Total();
+// total.iCMSTot = notaFiscalResponse.NFe.infNFe.total.ICMSTot;
+// total.iCMSTot.
+
+console.log(total);
